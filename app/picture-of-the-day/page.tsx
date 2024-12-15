@@ -26,14 +26,6 @@ interface ApodData {
   url: string;
 }
 
-async function getApod(): Promise<ApodData> {
-  const response = await fetch("/api/apod");
-  if (!response.ok) {
-    throw new Error("Failed to fetch APOD data");
-  }
-  return response.json();
-}
-
 export default function PictureOfTheDayPage() {
   const [apodData, setApodData] = useState<ApodData | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -44,7 +36,17 @@ export default function PictureOfTheDayPage() {
     setIsLoading(true);
     setError(null);
     try {
-      const data = await getApod();
+      const api_key = process.env.NEXT_PUBLIC_NASA_API_KEY;
+      if (!api_key) {
+        throw new Error("NASA API key is missing");
+      }
+      const response = await fetch(
+        `https://api.nasa.gov/planetary/apod?api_key=${api_key}`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch APOD data");
+      }
+      const data: ApodData = await response.json();
       setApodData(data);
     } catch (e) {
       setError(e instanceof Error ? e.message : "An unknown error occurred");
