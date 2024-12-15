@@ -1,103 +1,146 @@
-import Image from "next/image";
-import { ThemeToggle } from "@/components/theme-toggle";
+"use client";
 
-export default function Home() {
+import { useEffect } from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+import { FaGlobe, FaCameraRetro, FaRocket } from "react-icons/fa";
+
+export default function HomePage() {
+  useEffect(() => {
+    const starryBackground = document.querySelector(".starry-background");
+    if (starryBackground) {
+      for (let i = 0; i < 100; i++) {
+        const star = document.createElement("div");
+        star.className = "star";
+        star.style.width = `${Math.random() * 2}px`;
+        star.style.height = star.style.width;
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.top = `${Math.random() * 100}%`;
+        star.style.animationDelay = `${Math.random() * 2}s`;
+        starryBackground.appendChild(star);
+      }
+    }
+  }, []);
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="flex flex-col items-center min-h-screen bg-background text-foreground">
+      <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-black relative overflow-hidden flex justify-center items-center">
+        <div className="starry-background absolute inset-0"></div>
+        <div className="container px-4 md:px-6 relative z-10 text-center max-w-4xl">
+          <motion.div
+            className="flex flex-col items-center space-y-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
           >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <ThemeToggle />
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl/none text-white">
+              Bienvenue dans notre{" "}
+              <span className="text-primary">Système Solaire</span>
+            </h1>
+            <p className="mx-auto max-w-[700px] text-zinc-200 md:text-xl lg:text-2xl">
+              Explorez les merveilles de notre voisinage cosmique, des planètes
+              rocheuses aux géantes gazeuses.
+            </p>
+            <motion.div
+              className="space-x-4"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Link href="/planetes">
+                <Button variant="outline" size="lg" className="text-lg">
+                  Découvrir les Planètes
+                </Button>
+              </Link>
+            </motion.div>
+          </motion.div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </section>
+
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-background flex justify-center">
+        <div className="container px-4 md:px-6 max-w-6xl">
+          <div className="grid gap-8 lg:grid-cols-3 lg:gap-12">
+            <FeaturedCard
+              title="Planètes"
+              description="Explorez les huit planètes de notre système solaire, de la rocheuse Mercure à la glaciale Neptune."
+              icon={<FaGlobe className="text-6xl text-primary" />}
+              link="/planetes"
+            />
+            <FeaturedCard
+              title="Image du Jour"
+              description="Découvrez une nouvelle image fascinante de l'espace chaque jour, fournie par la NASA."
+              icon={<FaCameraRetro className="text-6xl text-primary" />}
+              link="/picture-of-the-day"
+            />
+            <FeaturedCard
+              title="À Propos"
+              description="Apprenez-en plus sur notre projet et notre passion pour l'exploration spatiale."
+              icon={<FaRocket className="text-6xl text-primary" />}
+              link="/about"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-primary text-primary-foreground flex justify-center">
+        <div className="container px-4 md:px-6 max-w-4xl text-center">
+          <motion.div
+            className="flex flex-col items-center space-y-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl">
+              Prêt à explorer l'univers ?
+            </h2>
+            <p className="mx-auto max-w-[600px] text-primary-foreground/80 md:text-xl lg:text-2xl">
+              Rejoignez-nous dans cette aventure cosmique et découvrez les
+              secrets de notre système solaire.
+            </p>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link href="/planetes">
+                <Button variant="secondary" size="lg" className="text-lg">
+                  Commencer l'Exploration
+                </Button>
+              </Link>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
     </div>
+  );
+}
+
+function FeaturedCard({
+  title,
+  description,
+  icon,
+  link,
+}: {
+  title: string;
+  description: string;
+  icon: JSX.Element;
+  link: string;
+}) {
+  return (
+    <motion.div
+      className="flex flex-col items-center space-y-4 p-6 bg-card text-card-foreground rounded-lg shadow-lg transition-all duration-300 ease-in-out hover:shadow-xl border border-border"
+      whileHover={{ y: -5 }}
+    >
+      <div className="flex items-center justify-center w-20 h-20 bg-primary/10 rounded-full">
+        {icon}
+      </div>
+
+      <div className="space-y-2 text-center">
+        <h3 className="text-2xl font-bold">{title}</h3>
+        <p className="text-muted-foreground">{description}</p>
+      </div>
+
+      <Link href={link}>
+        <Button variant="outline" className="w-full">
+          En savoir plus
+        </Button>
+      </Link>
+    </motion.div>
   );
 }
